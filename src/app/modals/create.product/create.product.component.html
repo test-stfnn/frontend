@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Crear Producto</h2>
+<form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="dialog-content">
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre del Producto</mat-label>
+            <input matInput formControlName="name" placeholder="Ingrese el nombre del producto" />
+            <mat-error *ngIf="addProductForm.get('name')?.hasError('required')"> El nombre es obligatorio </mat-error>
+            <mat-error *ngIf="addProductForm.get('name')?.hasError('minlength')"> El nombre debe tener al menos 3 caracteres </mat-error>
+            <mat-error *ngIf="addProductForm.get('name')?.hasError('maxlength')"> El nombre no puede exceder los 20 caracteres </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Categoría</mat-label>
+            <input matInput formControlName="category" placeholder="Ingrese la categoría del producto" />
+            <mat-error *ngIf="addProductForm.get('category')?.hasError('required')"> La categoría es obligatoria </mat-error>
+            <mat-error *ngIf="addProductForm.get('category')?.hasError('minlength')"> La categoría debe tener al menos 3 caracteres </mat-error>
+            <mat-error *ngIf="addProductForm.get('category')?.hasError('maxlength')"> La categoría no puede exceder los 20 caracteres </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" formControlName="price" placeholder="Ingrese el precio del producto" />
+            <mat-error *ngIf="addProductForm.get('price')?.hasError('required')"> El precio es obligatorio </mat-error>
+            <mat-error *ngIf="addProductForm.get('price')?.hasError('min')"> El precio debe ser un número positivo </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" formControlName="quantity" placeholder="Ingrese la cantidad del producto" />
+            <mat-error *ngIf="addProductForm.get('quantity')?.hasError('required')"> La cantidad es obligatoria </mat-error>
+            <mat-error *ngIf="addProductForm.get('quantity')?.hasError('min')"> La cantidad no puede ser menor a 0 </mat-error>
+            <mat-error *ngIf="addProductForm.get('quantity')?.hasError('integer')"> La cantidad debe ser un número entero </mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="addProductForm.invalid"> Crear Producto </button>
+        <button mat-button class="fixed-actions-button" (click)="onCancel()"> Cancelar ❌ </button>
+    </mat-dialog-actions>
+</form>

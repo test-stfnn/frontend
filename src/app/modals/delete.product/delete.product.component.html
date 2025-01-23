@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>Borrar Producto</h2>
+<mat-dialog-content> ¿Está seguro de borrar el producto {{ data.name }}? </mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onDelete($event)"> Borrar Producto </button>
+    <button mat-button class="fixed-actions-button" (click)="onCancel($event)"> Cancelar ❌ </button>
+</mat-dialog-actions>
