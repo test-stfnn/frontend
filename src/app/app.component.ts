@@ -64,194 +64,194 @@ export class AppComponent implements OnInit {
         'quantity',
     ];
 
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+    @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
-  constructor(
-    private productService: ProductService,
-    public  dialog        : MatDialog,
-    public  snackBar      : MatSnackBar,
-  ) {}
+    constructor(
+        private productService: ProductService,
+        public  dialog        : MatDialog,
+        public  snackBar      : MatSnackBar,
+    ) {}
 
-  ngOnInit() {
-      this.getProducts();
-  }
+    ngOnInit() {
+        this.getProducts();
+    }
 
-  /**
-   * @method onMouseDown
-   * @param event
-   * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
-   */
-  onMouseDown(event: MouseEvent) {
-      this.isDown = true;
-      this.scrollContainer.nativeElement.classList.add('active');
-      this.startX     = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
-      this.scrollLeft = this.scrollContainer.nativeElement.scrollLeft;
-  }
+    /**
+     * @method onMouseDown
+     * @param event
+     * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
+     */
+    onMouseDown(event: MouseEvent) {
+        this.isDown = true;
+        this.scrollContainer.nativeElement.classList.add('active');
+        this.startX     = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
+        this.scrollLeft = this.scrollContainer.nativeElement.scrollLeft;
+    }
 
-  /**
-   * @method onMouseLeave
-   * @param event
-   * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
-   */
-  onMouseLeave() {
-      this.isDown = false;
-      this.scrollContainer.nativeElement.classList.remove('active');
-  }
+    /**
+     * @method onMouseLeave
+     * @param event
+     * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
+     */
+    onMouseLeave() {
+        this.isDown = false;
+        this.scrollContainer.nativeElement.classList.remove('active');
+    }
 
-  /**
-   * @method onMouseUp
-   * @param event
-   * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
-   */
-  onMouseUp() {
-      this.isDown = false;
-      this.scrollContainer.nativeElement.classList.remove('active');
-  }
+    /**
+     * @method onMouseUp
+     * @param event
+     * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
+     */
+    onMouseUp() {
+        this.isDown = false;
+        this.scrollContainer.nativeElement.classList.remove('active');
+    }
 
-  /**
-   * @method onMouseMove
-   * @param event
-   * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
-   */
-  onMouseMove(event: MouseEvent) {
-      if (!this.isDown) return;
-      event.preventDefault();
-      const x                                             = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
-      const walk                                          = (x - this.startX) * 2;
-      this.scrollContainer.nativeElement.scrollLeft = this.scrollLeft - walk;
-  }
+    /**
+     * @method onMouseMove
+     * @param event
+     * @description Función que permite interactuar con la tabla de Subusuarios al dar click.
+     */
+    onMouseMove(event: MouseEvent) {
+        if (!this.isDown) return;
+        event.preventDefault();
+        const x = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
+        const walk = (x - this.startX) * 2;
+        this.scrollContainer.nativeElement.scrollLeft = this.scrollLeft - walk;
+    }
 
-  /**
-   * @method getProducts
-   * @description Obtiene la lista de productos desde el servicio y actualiza la vista.
-   */
-  getProducts() {
-      this.isLoading = true;
-      this.productService
-          .getProducts(
-              this.queryPaginationProduct?.page,
-              this.queryPaginationProduct?.limit,
-          )
-          .subscribe({
-              next: (response: PaginatedProducts) => {
-                  this.products               = response.products;
-                  this.isLoading              = false;
-                  this.queryPaginationProduct = {
-                      limit: response.limit,
-                      page : response.page,
-                      total: response.total,
-                  };
+    /**
+     * @method getProducts
+     * @description Obtiene la lista de productos desde el servicio y actualiza la vista.
+     */
+    getProducts() {
+        this.isLoading = true;
+        this.productService
+            .getProducts(
+                this.queryPaginationProduct?.page,
+                this.queryPaginationProduct?.limit,
+            )
+            .subscribe({
+                next: (response: PaginatedProducts) => {
+                    this.products               = response.products;
+                    this.isLoading              = false;
+                    this.queryPaginationProduct = {
+                        limit: response.limit,
+                        page : response.page,
+                        total: response.total,
+                    };
 
-                  this.snackBar.open(response.message, 'Cerrar', {
-                      duration          : 5000,
-                      horizontalPosition: 'right',
-                      verticalPosition  : 'bottom',
-                  });
-                  console.log('snackBar.open called with:', response.message);
-              },
-              error: (error) => {
-                  this.errorMessage = 'Failed to load data';
-                  this.isLoading    = false;
-                  console.error(error);
-              },
-          });
-  }
+                    this.snackBar.open(response.message, 'Cerrar', {
+                        duration          : 5000,
+                        horizontalPosition: 'right',
+                        verticalPosition  : 'bottom',
+                    });
+                    console.log('snackBar.open called with:', response.message);
+                },
+                error: (error) => {
+                    this.errorMessage = 'Failed to load data';
+                    this.isLoading    = false;
+                    console.error(error);
+                },
+            });
+    }
 
-  /**
-   * @method onPageChange
-   * @param event - Evento de paginación.
-   * @description Función que detecta el evento de la paginación.
-   */
-  onPageChange(event: PageEvent): void {
-      this.queryPaginationProduct.page  = event.pageIndex + 1;
-      this.queryPaginationProduct.limit = event.pageSize;
+    /**
+     * @method onPageChange
+     * @param event - Evento de paginación.
+     * @description Función que detecta el evento de la paginación.
+     */
+    onPageChange(event: PageEvent): void {
+        this.queryPaginationProduct.page  = event.pageIndex + 1;
+        this.queryPaginationProduct.limit = event.pageSize;
 
-      this.getProducts();
-  }
+        this.getProducts();
+    }
 
-  /**
-   * @method trackByFn
-   * @param index - Índice del elemento.
-   * @param item - Elemento del producto.
-   * @description Función de rastreo para identificar elementos únicos en una lista.
-   */
-  trackByFn(index: number, item: Product) {
-      return item.id;
-  }
+    /**
+     * @method trackByFn
+     * @param index - Índice del elemento.
+     * @param item - Elemento del producto.
+     * @description Función de rastreo para identificar elementos únicos en una lista.
+     */
+    trackByFn(index: number, item: Product) {
+        return item.id;
+    }
 
-  /**
-   * @method onUpdate
-   * @param item - Producto a actualizar.
-   * @description Abre un cuadro de diálogo para actualizar un producto existente.
-   */
-  onUpdate(item: Product) {
-      const dialogRef = this.dialog.open(UpdateProductComponent, {
-          width       : '800px',
-          disableClose: true,
-          hasBackdrop : true,
-          data        : item,
-      });
+    /**
+     * @method onUpdate
+     * @param item - Producto a actualizar.
+     * @description Abre un cuadro de diálogo para actualizar un producto existente.
+     */
+    onUpdate(item: Product) {
+        const dialogRef = this.dialog.open(UpdateProductComponent, {
+            width       : '800px',
+            disableClose: true,
+            hasBackdrop : true,
+            data        : item,
+        });
 
-      dialogRef.afterClosed().subscribe((result) => {
-          if (result.status === 'ok') {
-              this.getProducts();
-          }
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result.status === 'ok') {
+                this.getProducts();
+            }
 
-          this.snackBar.open(result.message, 'Cerrar', {
-              duration          : 5000,
-              horizontalPosition: 'right',
-              verticalPosition  : 'bottom',
-          });
-      });
-  }
+            this.snackBar.open(result.message, 'Cerrar', {
+                duration          : 5000,
+                horizontalPosition: 'right',
+                verticalPosition  : 'bottom',
+            });
+        });
+    }
 
-  /**
-   * @method onDelete
-   * @param item - Producto a eliminar.
-   * @description Abre un cuadro de diálogo para eliminar un producto existente.
-   */
-  onDelete(item: Product) {
-      const dialogRef = this.dialog.open(DeleteProductComponent, {
-          width       : '800px',
-          disableClose: true,
-          hasBackdrop : true,
-          data        : item,
-      });
+    /**
+     * @method onDelete
+     * @param item - Producto a eliminar.
+     * @description Abre un cuadro de diálogo para eliminar un producto existente.
+     */
+    onDelete(item: Product) {
+        const dialogRef = this.dialog.open(DeleteProductComponent, {
+            width       : '800px',
+            disableClose: true,
+            hasBackdrop : true,
+            data        : item,
+        });
 
-      dialogRef.afterClosed().subscribe((result) => {
-          if (result.status === 'ok') {
-              this.getProducts();
-          }
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result.status === 'ok') {
+                this.getProducts();
+            }
 
-          this.snackBar.open(result.message, 'Cerrar', {
-              duration          : 5000,
-              horizontalPosition: 'right',
-              verticalPosition  : 'bottom',
-          });
-      });
-  }
+            this.snackBar.open(result.message, 'Cerrar', {
+                duration          : 5000,
+                horizontalPosition: 'right',
+                verticalPosition  : 'bottom',
+            });
+        });
+    }
 
-  /**
-   * @method onCreate
-   * @description Abre un cuadro de diálogo para crear un nuevo producto.
-   */
-  onCreate() {
-      const dialogRef = this.dialog.open(CreateProductComponent, {
-          width       : '800px',
-          disableClose: true,
-          hasBackdrop : true,
-      });
+    /**
+     * @method onCreate
+     * @description Abre un cuadro de diálogo para crear un nuevo producto.
+     */
+    onCreate() {
+        const dialogRef = this.dialog.open(CreateProductComponent, {
+            width       : '800px',
+            disableClose: true,
+            hasBackdrop : true,
+        });
 
-      dialogRef.afterClosed().subscribe((result) => {
-          if (result.status === 'ok') {
-              this.getProducts();
-          }
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result.status === 'ok') {
+                this.getProducts();
+            }
 
-          this.snackBar.open(result.message, 'Cerrar', {
-              duration          : 5000,
-              horizontalPosition: 'right',
-              verticalPosition  : 'bottom',
-          });
-      });
-  }
+            this.snackBar.open(result.message, 'Cerrar', {
+                duration          : 5000,
+                horizontalPosition: 'right',
+                verticalPosition  : 'bottom',
+            });
+        });
+    }
 }
