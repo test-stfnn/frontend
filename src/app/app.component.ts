@@ -22,16 +22,16 @@ import { UpdateProductComponent } from './modals/update.product/update.product.c
 
 interface QueryPaginationObject {
     limit: number,
-    page: number,
+    page : number,
     total: number,
 };
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
+    selector   : 'app-root',
+    standalone : true,
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [
+    styleUrls  : ['./app.component.scss'],
+    imports    : [
         MatProgressSpinnerModule,
         CommonModule,
         MatProgressSpinnerModule,
@@ -42,16 +42,16 @@ interface QueryPaginationObject {
     ],
 })
 export class AppComponent implements OnInit {
-    isLoading = true;
+    isLoading    = true;
     errorMessage = '';
-    products: Product[] = [];
-    isDown = false;
-    startX = 0;
-    scrollLeft = 0;
+    products: Product[]   = [];
+    isDown       = false;
+    startX       = 0;
+    scrollLeft   = 0;
 
     queryPaginationProduct: QueryPaginationObject = {
         limit: 10,
-        page: 1,
+        page : 1,
         total: 10,
     };
 
@@ -68,8 +68,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    public dialog: MatDialog,
-    public snackBar: MatSnackBar,
+    public  dialog        : MatDialog,
+    public  snackBar      : MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
   onMouseDown(event: MouseEvent) {
       this.isDown = true;
       this.scrollContainer.nativeElement.classList.add('active');
-      this.startX = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
+      this.startX     = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
       this.scrollLeft = this.scrollContainer.nativeElement.scrollLeft;
   }
 
@@ -116,8 +116,8 @@ export class AppComponent implements OnInit {
   onMouseMove(event: MouseEvent) {
       if (!this.isDown) return;
       event.preventDefault();
-      const x = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
-      const walk = (x - this.startX) * 2;
+      const x                                             = event.pageX - this.scrollContainer.nativeElement.offsetLeft;
+      const walk                                          = (x - this.startX) * 2;
       this.scrollContainer.nativeElement.scrollLeft = this.scrollLeft - walk;
   }
 
@@ -134,24 +134,24 @@ export class AppComponent implements OnInit {
           )
           .subscribe({
               next: (response: PaginatedProducts) => {
-                  this.products = response.products;
-                  this.isLoading = false;
+                  this.products               = response.products;
+                  this.isLoading              = false;
                   this.queryPaginationProduct = {
                       limit: response.limit,
-                      page: response.page,
+                      page : response.page,
                       total: response.total,
                   };
 
                   this.snackBar.open(response.message, 'Cerrar', {
-                      duration: 5000,
+                      duration          : 5000,
                       horizontalPosition: 'right',
-                      verticalPosition: 'bottom',
+                      verticalPosition  : 'bottom',
                   });
                   console.log('snackBar.open called with:', response.message);
               },
               error: (error) => {
                   this.errorMessage = 'Failed to load data';
-                  this.isLoading = false;
+                  this.isLoading    = false;
                   console.error(error);
               },
           });
@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
    * @description Función que detecta el evento de la paginación.
    */
   onPageChange(event: PageEvent): void {
-      this.queryPaginationProduct.page = event.pageIndex + 1;
+      this.queryPaginationProduct.page  = event.pageIndex + 1;
       this.queryPaginationProduct.limit = event.pageSize;
 
       this.getProducts();
@@ -186,10 +186,10 @@ export class AppComponent implements OnInit {
    */
   onUpdate(item: Product) {
       const dialogRef = this.dialog.open(UpdateProductComponent, {
-          width: '800px',
+          width       : '800px',
           disableClose: true,
-          hasBackdrop: true,
-          data: item,
+          hasBackdrop : true,
+          data        : item,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -198,9 +198,9 @@ export class AppComponent implements OnInit {
           }
 
           this.snackBar.open(result.message, 'Cerrar', {
-              duration: 5000,
+              duration          : 5000,
               horizontalPosition: 'right',
-              verticalPosition: 'bottom',
+              verticalPosition  : 'bottom',
           });
       });
   }
@@ -212,10 +212,10 @@ export class AppComponent implements OnInit {
    */
   onDelete(item: Product) {
       const dialogRef = this.dialog.open(DeleteProductComponent, {
-          width: '800px',
+          width       : '800px',
           disableClose: true,
-          hasBackdrop: true,
-          data: item,
+          hasBackdrop : true,
+          data        : item,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -224,9 +224,9 @@ export class AppComponent implements OnInit {
           }
 
           this.snackBar.open(result.message, 'Cerrar', {
-              duration: 5000,
+              duration          : 5000,
               horizontalPosition: 'right',
-              verticalPosition: 'bottom',
+              verticalPosition  : 'bottom',
           });
       });
   }
@@ -237,9 +237,9 @@ export class AppComponent implements OnInit {
    */
   onCreate() {
       const dialogRef = this.dialog.open(CreateProductComponent, {
-          width: '800px',
+          width       : '800px',
           disableClose: true,
-          hasBackdrop: true,
+          hasBackdrop : true,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -248,9 +248,9 @@ export class AppComponent implements OnInit {
           }
 
           this.snackBar.open(result.message, 'Cerrar', {
-              duration: 5000,
+              duration          : 5000,
               horizontalPosition: 'right',
-              verticalPosition: 'bottom',
+              verticalPosition  : 'bottom',
           });
       });
   }

@@ -163,7 +163,7 @@ describe('when MAT_DIALOG_DATA has missing properties', () => {
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 {
                     provide: MAT_DIALOG_DATA,
-                    useValue: { name: 'Partial Product' }, // Missing category, price, quantity
+                    useValue: { name: 'Partial Product' },
                 },
                 { provide: ProductService, useValue: mockProductService },
                 provideAnimations(),
@@ -178,9 +178,9 @@ describe('when MAT_DIALOG_DATA has missing properties', () => {
     it('should initialize with provided values and defaults for missing fields', () => {
         expect(component.updateProductForm.value).toEqual({
             name: 'Partial Product',
-            category: '', // Default for missing category
-            price: 0,     // Default for missing price
-            quantity: 0,  // Default for missing quantity
+            category: '',
+            price: 0,
+            quantity: 0,
         });
     });
 });
@@ -194,7 +194,7 @@ describe('when MAT_DIALOG_DATA has missing name', () => {
                 { provide: MatDialogRef, useValue: mockDialogRef },
                 {
                     provide: MAT_DIALOG_DATA,
-                    useValue: { category: 'First' }, // Missing category, price, quantity
+                    useValue: { category: 'First' },
                 },
                 { provide: ProductService, useValue: mockProductService },
                 provideAnimations(),
@@ -209,9 +209,9 @@ describe('when MAT_DIALOG_DATA has missing name', () => {
     it('should initialize with provided values and defaults for missing fields', () => {
         expect(component.updateProductForm.value).toEqual({
             name: '',
-            category: 'First', // Default for missing category
-            price: 0,     // Default for missing price
-            quantity: 0,  // Default for missing quantity
+            category: 'First',
+            price: 0,
+            quantity: 0,
         });
     });
 });

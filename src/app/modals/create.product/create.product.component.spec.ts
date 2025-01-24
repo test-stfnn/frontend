@@ -102,7 +102,7 @@ describe('CreateProductComponent', () => {
             message: 'No se crea el producto',
         });
     });
-    // Valid Cases
+
     it('should return null for valid integer values', () => {
         const validValues = [5, 0, -3];
         validValues.forEach(value => {
@@ -111,7 +111,6 @@ describe('CreateProductComponent', () => {
         });
     });
 
-    // Invalid Cases
     it('should return { integer: true } for non-integer values', () => {
         const invalidValues = [5.5, '5', 'abc', null, undefined];
         invalidValues.forEach(value => {

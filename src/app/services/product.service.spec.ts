@@ -23,7 +23,7 @@ describe('ProductService', () => {
     });
 
     afterEach(() => {
-        httpMock.verify(); // Ensure no outstanding HTTP requests after each test
+        httpMock.verify();
     });
 
     it('should fetch paginated products', () => {
@@ -136,6 +136,4 @@ describe('ProductService', () => {
         expect(req.request.method).toBe('POST');
         req.flush(mockResponse);
     });
-
-    // Test cases here
 });
