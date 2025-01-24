@@ -40,6 +40,12 @@ export class DeleteProductComponent {
     @Inject(MAT_DIALOG_DATA) public data: Product,
     ) {}
 
+    /**
+     * @method onDelete
+     * @param event - Evento que se activa al intentar eliminar un producto.
+     * @description Maneja la eliminación de un producto. Llama al servicio para eliminar el producto
+     * por su ID y cierra el cuadro de diálogo con el estado del resultado (éxito o error).
+     */
     onDelete(event: Event): void {
         event.preventDefault();
 
@@ -61,6 +67,12 @@ export class DeleteProductComponent {
         });
     }
 
+    /**
+     * @method onCancel
+     * @param event - Evento que se activa al cancelar la eliminación del producto.
+     * @description Cierra el cuadro de diálogo sin realizar ninguna acción de eliminación.
+     * Retorna un estado de cancelación.
+     */
     onCancel(event: Event): void {
         event.preventDefault();
         this.dialogRef.close({

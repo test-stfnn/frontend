@@ -75,12 +75,22 @@ export class CreateProductComponent implements OnInit {
         });
     }
 
-    // Custom validator for integer
+    /**
+     * @method integerValidator
+     * @param control - Control del formulario que contiene el valor.
+     * @description Valida que el valor ingresado sea un número entero.
+     * @returns Un objeto con el error si el valor no es un número entero, o null si es válido.
+     */
     integerValidator(control: AbstractControl): ValidationErrors | null {
         const value = control.value;
         return Number.isInteger(value) ? null : { integer: true };
     }
 
+    /**
+     * @method onSubmit
+     * @description Envía el formulario si es válido y llama al servicio para agregar un nuevo producto.
+     * Cierra el cuadro de diálogo con el estado del resultado (éxito o error).
+     */
     onSubmit(): void {
         if (this.addProductForm.valid) {
             const addProduct = this.addProductForm.value;
@@ -92,10 +102,10 @@ export class CreateProductComponent implements OnInit {
                         message: response.message,
                     });
                 },
-                error: (error) => {
+                error: (error: Error) => {
                     this.dialogRef.close({
                         status: 'error',
-                        message: error,
+                        message: error.message,
                     });
                     console.error(error);
                 },
@@ -103,6 +113,11 @@ export class CreateProductComponent implements OnInit {
         }
     }
 
+    /**
+     * @method onCancel
+     * @description Cierra el cuadro de diálogo sin realizar ninguna acción para crear un nuevo producto.
+     * Retorna un estado de cancelación.
+     */
     onCancel(): void {
         this.dialogRef.close({
             status: 'cancel',

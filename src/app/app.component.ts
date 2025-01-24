@@ -121,6 +121,10 @@ export class AppComponent implements OnInit {
       this.scrollContainer.nativeElement.scrollLeft = this.scrollLeft - walk;
   }
 
+  /**
+   * @method getProducts
+   * @description Obtiene la lista de productos desde el servicio y actualiza la vista.
+   */
   getProducts() {
       this.isLoading = true;
       this.productService
@@ -155,7 +159,7 @@ export class AppComponent implements OnInit {
 
   /**
    * @method onPageChange
-   * @param event
+   * @param event - Evento de paginación.
    * @description Función que detecta el evento de la paginación.
    */
   onPageChange(event: PageEvent): void {
@@ -165,10 +169,21 @@ export class AppComponent implements OnInit {
       this.getProducts();
   }
 
+  /**
+   * @method trackByFn
+   * @param index - Índice del elemento.
+   * @param item - Elemento del producto.
+   * @description Función de rastreo para identificar elementos únicos en una lista.
+   */
   trackByFn(index: number, item: Product) {
       return item.id;
   }
 
+  /**
+   * @method onUpdate
+   * @param item - Producto a actualizar.
+   * @description Abre un cuadro de diálogo para actualizar un producto existente.
+   */
   onUpdate(item: Product) {
       const dialogRef = this.dialog.open(UpdateProductComponent, {
           width: '800px',
@@ -190,6 +205,11 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /**
+   * @method onDelete
+   * @param item - Producto a eliminar.
+   * @description Abre un cuadro de diálogo para eliminar un producto existente.
+   */
   onDelete(item: Product) {
       const dialogRef = this.dialog.open(DeleteProductComponent, {
           width: '800px',
@@ -211,6 +231,10 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /**
+   * @method onCreate
+   * @description Abre un cuadro de diálogo para crear un nuevo producto.
+   */
   onCreate() {
       const dialogRef = this.dialog.open(CreateProductComponent, {
           width: '800px',

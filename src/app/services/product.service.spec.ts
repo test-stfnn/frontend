@@ -54,6 +54,34 @@ describe('ProductService', () => {
         req.flush(mockResponse);
     });
 
+    it('should fetch paginated products without params', () => {
+        const mockResponse: PaginatedProducts = {
+            products: [
+                {
+                    id: 1,
+                    name: 'Product A',
+                    category: 'Category A',
+                    price: 100,
+                    quantity: 10,
+                },
+            ],
+            total: 1,
+            message: 'Success',
+            page: 1,
+            limit: 10,
+        };
+
+        service.getProducts().subscribe((response) => {
+            expect(response).toEqual(mockResponse);
+        });
+
+        const req = httpMock.expectOne(
+            `${environment.apiUrl}products?page=1&limit=10`,
+        );
+        expect(req.request.method).toBe('GET');
+        req.flush(mockResponse);
+    });
+
     it('should update the product', () => {
         const product: Product = {
             id: 1,

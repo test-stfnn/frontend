@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import {
-  AbstractControl,
+    AbstractControl,
     FormBuilder,
     FormGroup,
     ReactiveFormsModule,
@@ -43,10 +43,10 @@ export class UpdateProductComponent implements OnInit {
     updateProductForm!: FormGroup;
 
     constructor(
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<UpdateProductComponent>,
-    private productService: ProductService,
-    @Inject(MAT_DIALOG_DATA) public data: Product, // Inject the data here
+        private fb: FormBuilder,
+        public dialogRef: MatDialogRef<UpdateProductComponent>,
+        private productService: ProductService,
+        @Inject(MAT_DIALOG_DATA) public data: Product, // Inyección de los datos iniciales
     ) {}
 
     ngOnInit(): void {
@@ -75,11 +75,22 @@ export class UpdateProductComponent implements OnInit {
         });
     }
 
+    /**
+     * @method integerValidator
+     * @param control - Control del formulario que contiene el valor.
+     * @description Valida que el valor ingresado sea un número entero.
+     * @returns Un objeto con el error si el valor no es entero, o null si es válido.
+     */
     integerValidator(control: AbstractControl): ValidationErrors | null {
         const value = control.value;
         return Number.isInteger(value) ? null : { integer: true };
     }
 
+    /**
+     * @method onSubmit
+     * @description Envía el formulario si es válido y realiza la actualización del producto mediante el servicio.
+     * Cierra el cuadro de diálogo con un estado de éxito o error dependiendo del resultado.
+     */
     onSubmit(): void {
         if (this.updateProductForm.valid) {
             const updatedProduct = this.updateProductForm.value;
@@ -103,10 +114,15 @@ export class UpdateProductComponent implements OnInit {
         }
     }
 
+    /**
+     * @method onCancel
+     * @description Cierra el cuadro de diálogo sin realizar ningún cambio en el producto.
+     * Retorna un estado de cancelación.
+     */
     onCancel(): void {
         this.dialogRef.close({
             status: 'cancel',
             message: 'No se actualiza el producto',
-        }); // Close the dialog without changes
+        });
     }
 }
